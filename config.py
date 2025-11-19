@@ -31,7 +31,7 @@ TOOL_ICON_SAVE_PATH = os.path.join(BASE_DIR, "media", "tool", "icon")
 PER_PAGE_COUNT=10
 
 
-NGINX_ACCESS_LOG_PATH = "/var/log/nginx/access.log"
+NGINX_ACCESS_LOG_PATH = "/var/log/personalweb/gunicorn_access.log"
 #NGINX_ACCESS_LOG_PATH = "C:\\Users\\admin\\Downloads\\access.log"
 
 CPU_INFO_PATH = "/proc/stat"
