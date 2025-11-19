@@ -1,0 +1,54 @@
+{% extends "front/base.html" %}
+
+{% block title %}登录 - 后台管理{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="login-wrapper">
+        <div class="logo-box">
+            <img src="{{ url_for('static', filename='front/images/logo.png') }}" alt="网站工具箱">
+        </div>
+        <h2 class="page-title">
+            <i class="fas fa-lock"></i> 后台管理-登录
+        </h2>
+        <div class="sign-box">
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">用户名</label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">密码</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="请输入密码" required>
+                </div>
+                <div class="form-group">
+                    <label for="graph-captcha" class="form-label">图形验证码</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="graph-captcha" id="graph-captcha" placeholder="请输入验证码" required>
+                        <span class="input-group-addon captcha-addon">
+                            <img id="captcha-img" class="captcha-img" src="{{ url_for('index.graph_captcha') }}" alt="验证码">
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block btn-login" id="btn-login">
+                        <i class="fas fa-sign-in-alt"></i> 登录
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="footer-text">
+            <p>© 2025 - 网站工具箱 </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='front/js/login.js') }}"></script>
+{% endblock %}

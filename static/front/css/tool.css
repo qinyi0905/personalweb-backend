@@ -1,0 +1,126 @@
+.tool-card {
+    transition: all 0.3s ease;
+    border-radius: 1rem !important;
+    overflow: hidden;
+}
+
+.tool-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+.tool-card .card-body {
+    padding: 1.5rem;
+}
+
+/* 工具图标样式 */
+.tool-icon {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    /* 添加以下属性来适配图片 */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* 为图片添加专门的样式 */
+.tool-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 分类导航样式 */
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    border-radius: 0 !important;
+    transition: all 0.3s ease;
+    padding: 0.8rem 1.25rem;
+}
+
+.list-group-item:first-child {
+    border-top: none;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.list-group-item.active {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.list-group-item.active:hover {
+    background-color: #0b5ed7;
+    transform: translateX(0);
+}
+
+/* 分页样式 */
+.pagination-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .section-header h1 {
+        font-size: 2rem;
+    }
+
+    .tool-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .tool-card .card-body {
+        padding: 1.25rem;
+    }
+
+    /* 在小屏幕上将分类导航移到上方 */
+    .row {
+        flex-direction: column-reverse;
+    }
+
+    .col-lg-3 {
+        order: 1;
+        margin-bottom: 1.5rem;
+    }
+
+    .col-lg-9 {
+        order: 2;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .tool-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+
+    .tool-card .card-title {
+        font-size: 1.1rem;
+    }
+
+    .tool-card .card-text {
+        font-size: 0.9rem;
+    }
+}

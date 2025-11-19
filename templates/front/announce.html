@@ -1,0 +1,78 @@
+{% extends "front/base.html" %}
+
+{% block title %}公告详情 - 网站工具箱{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/announce.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- 左侧相关公告列表 -->
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">相关公告</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    {% for announce in announce_slices %}
+                    <a href="{{ url_for('announce.announce', si=announce.id, page=page) }}"
+                       class="list-group-item list-group-item-action {% if si == announce.id %}active{% endif %}">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ announce.title }}</h6>
+                            <small>{{ announce.create_time }}</small>
+                        </div>
+                        <p class="mb-1">{{ announce.text_muted }}</p>
+                    </a>
+                    {% endfor %}
+                </div>
+                <div class="pagination-group" style="text-align:center;">
+                    {{ pagination.links }}
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧公告详情 -->
+        <div class="col-lg-8">
+            <article class="announcement-detail">
+                {% for announce in announces %}
+                    {% if si == announce.id %}
+                    <header class="announcement-header mb-4">
+                        <h1 class="announcement-title">{{ announce.title }}</h1>
+                        <div class="announcement-meta d-flex align-items-center text-muted">
+                            <span class="publish-date">
+                                <i class="fas fa-calendar-alt me-1"></i>
+                                {{ announce.create_time }}
+                            </span>
+                            <span class="mx-2">•</span>
+                            <span class="author">
+                                <i class="fas fa-user me-1"></i>
+                                {{ announce.author.realname }}
+                            </span>
+                            <span class="mx-2">•</span>
+                            <span class="views">
+                                <i class="fas fa-eye me-1"></i>
+                                {{ announce.access_count }}次浏览
+                            </span>
+                        </div>
+                    </header>
+
+                    <div class="announcement-content">
+                        {{ announce.content | safe }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                <footer class="announcement-footer mt-5 pt-4 border-top">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="tags">
+                            <span class="badge bg-primary me-1">公告</span>
+                            <span class="badge bg-danger">重要</span>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock %}

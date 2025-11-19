@@ -1,0 +1,61 @@
+{% extends "front/base.html" %}
+
+{% block title %}友情链接 - 网站工具箱{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename='front/css/link.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="section-header text-center mb-5">
+        <h1 class="display-4 fw-bold">GitHub链接</h1>
+        <p class="lead text-muted">工具箱的GitHub仓库地址</p>
+    </div>
+
+    <div class="row">
+        {% if links %}
+        {% for link in links %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="link-card card border-0 shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <div class="link-icon mx-auto mb-3">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h5 class="card-title text-center">{{ link.name }}</h5>
+                    <div class="link-actions mt-auto">
+                        <a href="{{ link.link_url }}" target="_blank" class="btn btn-primary btn-sm rounded-pill w-100">
+                            访问仓库
+                        </a>
+                    </div>
+                    <div class="tags"
+                         style="display: flex;justify-content: center;align-items: center;margin-top: 10px;">
+                        {% if link.is_deployed %}
+                        <span class="badge bg-success me-1">已部署</span>
+                        {% else %}
+                        <span class="badge bg-danger me-1">未部署</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i>暂无链接
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- 分页 -->
+    {% if pagination and links %}
+    <nav aria-label="友情链接分页" class="mt-4">
+        <div class="pagination-group">
+            {{ pagination.links }}
+        </div>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}
