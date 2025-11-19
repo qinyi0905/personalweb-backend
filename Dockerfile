@@ -6,7 +6,9 @@ WORKDIR /app
 
 COPY * /app/
 
-RUN cd /app && \
+RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources && \
+    apt update && \
+    cd /app && \
     apt install -y python3 python3-pip python3-venv && \
     python3 -m venv venv && \
     . venv/bin/activate \
