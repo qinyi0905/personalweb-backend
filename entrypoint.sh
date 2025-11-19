@@ -15,7 +15,7 @@ rm -rf /app/migrations || true
 /app/venv/bin/flask db upgrade
 
 #加入初始数据
-/app/venv/bin/flask init_role
+/app/venv/bin/flask init_roles
 /app/venv/bin/flask init_admin_user
 
 # gunicorn启动 Flask 应用
