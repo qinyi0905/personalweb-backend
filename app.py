@@ -40,4 +40,4 @@ app.cli.command("init_roles")(commands.init_roles)
 app.cli.command("init_admin_user")(commands.init_admin_user)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
