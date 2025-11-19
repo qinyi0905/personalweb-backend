@@ -12,9 +12,9 @@ __pycache__/
 migrations/
 
 # Exclude image files in media directories but preserve folder structure
+!logo.png
 *.png
 *.jpeg
 *.jpg
-!logo.png
 
 !requirements.txt
