@@ -15,5 +15,6 @@ migrations/
 *.png
 *.jpeg
 *.jpg
+!logo.png
 
 !requirements.txt
