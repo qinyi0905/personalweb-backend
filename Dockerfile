@@ -21,7 +21,8 @@ RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debia
     cp /app/pip.conf ~/.pip/pip.conf && \
     ./venv/bin/pip3 install --no-cache-dir -r requirements.txt && \
     ./venv/bin/pip3 install sqlalchemy-serializer==1.4.22 --no-deps && \
-    cat /app/entrypoint.sh > /docker-entrypoint.sh
+    cat /app/entrypoint.sh > /docker-entrypoint.sh && \
+    cat /app/nginx.conf > /etc/nginx/conf.d/default.conf
 
 ENV FLASK_APP=app.py
 ENV PYTHONPATH=/app
