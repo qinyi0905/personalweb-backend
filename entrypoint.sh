@@ -9,7 +9,7 @@ rm -rf /app/migrations || true
 /app/venv/bin/flask db init || true
 
 # 生成迁移脚本
-/app/venv/bin/flask db init db migrate
+/app/venv/bin/flask db migrate
 
 # 应用数据库迁移
 /app/venv/bin/flask db upgrade
