@@ -14,3 +14,7 @@ migrations/
 # Exclude image files in media directories but preserve folder structure
 media/banner/*.*
 media/tool/icon/*.*
+!media/banner/
+!media/tool/icon/
+!media/tool/
+!media/
