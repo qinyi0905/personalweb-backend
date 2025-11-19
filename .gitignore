@@ -11,5 +11,6 @@ __pycache__/
 
 migrations/
 
-media/banner/*
-media/tool/icon/*
+# Exclude image files in media directories but preserve folder structure
+media/banner/*.*
+media/tool/icon/*.*
