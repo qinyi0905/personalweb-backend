@@ -6,20 +6,20 @@ set -e
 rm -rf /app/migrations || true
 
 # 初始化数据库（如果尚未初始化）
-flask db init || true
+/app/venv/bin/flask db init || true
 
 # 生成迁移脚本
-flask db init db migrate
+/app/venv/bin/flask db init db migrate
 
 # 应用数据库迁移
-flask db upgrade
+/app/venv/bin/flask db upgrade
 
 #加入初始数据
-flask init_role
-flask init_admin_user
+/app/venv/bin/flask init_role
+/app/venv/bin/flask init_admin_user
 
 # gunicorn启动 Flask 应用
-gunicorn app:app
+/app/venv/bin/gunicorn app:app
 
 entrypoint_log() {
     if [ -z "${NGINX_ENTRYPOINT_QUIET_LOGS:-}" ]; then
