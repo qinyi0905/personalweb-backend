@@ -10,7 +10,7 @@ COPY models /app/models/
 COPY templates /app/templates/
 COPY static /app/static/
 COPY utils /app/utils/
-COPY *.py pip.conf requirements.txt nginx.conf entrypoint.sh /app/
+COPY *.py pip.conf requirements.txt nginx.conf start_server.sh /app/
 
 RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources && \
     apt update && \
