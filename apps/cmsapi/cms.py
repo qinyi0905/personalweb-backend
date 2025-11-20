@@ -94,7 +94,7 @@ def add_banner():
         name = form.name.data
         image_url = form.image_url.data
         link_url = form.link_url.data
-        #检查轮播图名称是否已存在
+        # 检查轮播图名称是否已存在
         if BannerModel.query.filter_by(image_url=image_url).first():
             return restful.params_error(message="轮播图已存在")
         banner = BannerModel(name=name, image_url=image_url, link_url=link_url)
@@ -229,7 +229,7 @@ def add_tooltype():
         name = form.name.data
         priority = form.priority.data
         icon = form.icon.data
-        #检查数据是否存在
+        # 检查数据是否存在
         if ToolTypeModel.query.filter(ToolTypeModel.name == name).first():
             return restful.params_error(message="工具分类已存在")
         tooltype = ToolTypeModel(name=name, priority=priority, icon=icon)
@@ -283,8 +283,9 @@ def add_tool():
         link_url = form.link_url.data
         type_name = form.type_name.data
         type_id = ToolTypeModel.query.filter(ToolTypeModel.name == type_name).first().id
-        #检查数据是否存在
-        if ToolModel.query.filter(ToolModel.name == name).first() or ToolModel.query.filter(ToolModel.link_url == link_url).first():
+        # 检查数据是否存在
+        if ToolModel.query.filter(ToolModel.name == name).first() or ToolModel.query.filter(
+                ToolModel.link_url == link_url).first():
             return restful.params_error(message="工具已存在")
         tool = ToolModel(name=name, description=description, icon_url=icon_url, link_url=link_url, type_id=type_id)
         db.session.add(tool)
@@ -358,7 +359,7 @@ def add_link():
     if form.validate():
         name = form.name.data
         link_url = form.link_url.data
-        #检查链接是否已经存在
+        # 检查链接是否已经存在
         if LinkModel.query.filter(LinkModel.link_url == link_url).first():
             return restful.params_error(message="链接已经存在")
         link = LinkModel(name=name, link_url=link_url)
@@ -440,7 +441,7 @@ def user_list():
     page_size = current_app.config['PER_PAGE_COUNT']
     start = (page - 1) * page_size
     end = start + page_size
-    user_obj = UserModel.query.join(RoleModel).order_by(RoleModel.permissions.desc(),UserModel.join_time)
+    user_obj = UserModel.query.join(RoleModel).order_by(RoleModel.permissions.desc(), UserModel.join_time)
     total_count = user_obj.count()
     users = user_obj.slice(start, end)
     user_list = [user.to_dict() for user in users]
@@ -493,10 +494,10 @@ def add_user():
         role = RoleModel.query.get(role_id)
         if not role:
             return restful.params_error(message="角色不存在")
-        #检查用户名是否已经存在
+        # 检查用户名是否已经存在
         if UserModel.query.filter_by(username=username).first():
             return restful.params_error(message="用户名已经存在")
-        if UserModel.query.filter_by(username="admin").first():
+        if username in ["admin", "administrator", "root", "superadmin", "superuser"]:
             return restful.params_error(message="只能有一个超级管理员用户")
         user = UserModel(username=username, password=password, realname=realname, role=role)
         db.session.add(user)
@@ -505,6 +506,7 @@ def add_user():
     else:
         message = form.messages[0]
         return restful.params_error(message=message)
+
 
 @cmsapi_bp.post("/user/update/password")
 def update_user_password():
@@ -526,6 +528,7 @@ def update_user_password():
     else:
         return restful.params_error(message="用户不存在")
 
+
 @cmsapi_bp.post("/user/reset/password")
 def reset_user_password():
     user_id = request.form.get("id")
@@ -540,6 +543,7 @@ def reset_user_password():
         return restful.ok()
     else:
         return restful.params_error(message="用户不存在")
+
 
 @cmsapi_bp.post("/user/update/role")
 @permission_required(Permission.USER)
@@ -557,6 +561,7 @@ def update_user_role():
     else:
         return restful.params_error(message="用户不存在")
 
+
 @cmsapi_bp.get("/sys/useage")
 def sys_useage():
     systeminfo = SystemInfo()
@@ -564,22 +569,26 @@ def sys_useage():
     get_mem_usage = systeminfo.get_memory_usage()
     return restful.ok(data={"cpu_usage": get_cpu_usage, "mem_usage": get_mem_usage})
 
+
 @cmsapi_bp.get("/tool/menu")
 def tool_menu():
-    result = db.session.query(ToolTypeModel.name,func.count(ToolTypeModel.name)).join(ToolModel).group_by(ToolModel.type_id).all()
-    data=[]
+    result = db.session.query(ToolTypeModel.name, func.count(ToolTypeModel.name)).join(ToolModel).group_by(
+        ToolModel.type_id).all()
+    data = []
     for _ in result:
-        data.append({'name': _[0],'value': _[1]})
+        data.append({'name': _[0], 'value': _[1]})
     return restful.ok(data=data)
+
 
 @cmsapi_bp.get("/tool/usage/count")
 def tool_usage_count():
     xAxis_data = []
     yAxis_data = []
-    for _ in db.session.query(ToolModel.name,ToolModel.access_count).order_by(ToolModel.access_count.desc()).all()[:8]:
+    for _ in db.session.query(ToolModel.name, ToolModel.access_count).order_by(ToolModel.access_count.desc()).all()[:8]:
         xAxis_data.append(_[0])
         yAxis_data.append(_[1])
     return restful.ok(data={'xAxis_data': xAxis_data, 'yAxis_data': yAxis_data})
+
 
 @cmsapi_bp.get("/web/access/info")
 def web_access_info():
@@ -587,7 +596,7 @@ def web_access_info():
     date_access = systeminfo.get_nginx_access_log()
     xAxis_data = []
     yAxis_data = []
-    for key,value in date_access.items():
+    for key, value in date_access.items():
         xAxis_data.append(key)
         yAxis_data.append(value)
     return restful.ok(data={'xAxis_data': xAxis_data, 'yAxis_data': yAxis_data})
