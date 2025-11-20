@@ -4,6 +4,6 @@ bind = "127.0.0.1:5000"
 workers = multiprocessing.cpu_count() * 2 + 1
 threads = 10
 accesslog = "/var/log/personalweb/gunicorn_access.log"
-errorlogb = "/var/log/personalweb/gunicorn_error.log"
+errorlog = "/var/log/personalweb/gunicorn_error.log"
 preload_app = True
 daemon = True

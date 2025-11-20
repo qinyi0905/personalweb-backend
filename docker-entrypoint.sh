@@ -8,12 +8,7 @@ if [ -e /app/init_server.sh ];then
   rm -rf /app/init_server.sh
 fi
 
-program=$(ps -ef | grep gunicorn | grep -v grep)
-if [ -n "$program" ];then
-  pkill gunicorn
-fi
-
-/app/venv/bin/gunicorn app:app -c /app/gunicorn.conf.py
+/app/venv/bin/gunicorn app:app -c /app/gunicorn.conf.py &
 
 entrypoint_log() {
     if [ -z "${NGINX_ENTRYPOINT_QUIET_LOGS:-}" ]; then
