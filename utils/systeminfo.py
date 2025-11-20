@@ -21,7 +21,7 @@ class SystemInfo:
             time.sleep(1)
 
             # Read second sample
-            with open(config.CPU_INFO_PATH+"1", 'r') as f:
+            with open(config.CPU_INFO_PATH, 'r') as f:
                 line = f.readline().split()
                 user2 = int(line[1])
                 nice2 = int(line[2])

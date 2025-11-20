@@ -284,7 +284,7 @@ def add_tool():
         type_name = form.type_name.data
         type_id = ToolTypeModel.query.filter(ToolTypeModel.name == type_name).first().id
         #检查数据是否存在
-        if ToolModel.query.filter(ToolModel.name == name).first() or ToolModel.query.filter(ToolTypeModel.link_url == link_url):
+        if ToolModel.query.filter(ToolModel.name == name).first() or ToolModel.query.filter(ToolModel.link_url == link_url).first():
             return restful.params_error(message="工具已存在")
         tool = ToolModel(name=name, description=description, icon_url=icon_url, link_url=link_url, type_id=type_id)
         db.session.add(tool)

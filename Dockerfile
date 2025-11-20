@@ -15,7 +15,7 @@ COPY *.py pip.conf requirements.txt nginx.conf start_server.sh /app/
 RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources && \
     apt update && \
     cd /app && \
-    apt install -y python3 python3-pip python3-venv procps iputils-ping ncat redis-tools && \
+    apt install -y python3 python3-pip python3-venv procps iputils-ping ncat redis-tools vim && \
     python3 -m venv venv && \
     . ./venv/bin/activate && \
     cp /app/pip.conf ~/.pip/pip.conf && \
