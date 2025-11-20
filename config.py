@@ -39,3 +39,5 @@ CPU_INFO_PATH = "/proc/stat"
 
 MEM_INFO_PATH = "/proc/meminfo"
 #MEM_INFO_PATH = "C:\\Users\\admin\\Downloads\\meminfo"
+
+CAPTCHA_FONT_PATH = os.path.join(BASE_DIR, "utils", "captcha")

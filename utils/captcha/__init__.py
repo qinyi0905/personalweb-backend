@@ -57,16 +57,11 @@ class Captcha(object):
     # 随机选择一个字体
     @classmethod
     def __gene_random_font(cls):
-        fonts = [
-            #'AlibabaPuHuiTi-3-55-Regular.ttf'
-            #'Courgette-Regular.ttf',
-            #'LHANDW.TTF',
-            #'Lobster-Regular.ttf',
-            'verdana.ttf'
-        ]
-        font = random.choice(fonts)
-        fontpath = os.path.join(current_app.config['BASE_DIR'],'utils','captcha',font)
-        # return 'utils/captcha/'+font
+        fontpath = ""
+        for font in os.listdir(current_app.config['CAPTCHA_FONT_PATH']):
+            if font.endswith('.ttf'):
+                fontpath = os.path.join(current_app.config['BASE_DIR'],'utils','captcha',font)
+                break
         return fontpath
 
 
