@@ -1,7 +1,4 @@
 #!/bin/bash
-
-trap 'rm -f "$0"' EXIT
-
 source /app/venv/bin/activate
 
 rm -rf /app/migrations || true
@@ -18,5 +15,3 @@ flask db upgrade
 #加入初始数据
 flask init_roles
 flask init_admin_user
-
-exit 0

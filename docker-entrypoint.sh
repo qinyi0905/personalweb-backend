@@ -5,6 +5,7 @@ set -e
 
 if [ -e /app/init_server.sh ];then
   bash -c "/app/init_server.sh"
+  rm -rf /app/init_server.sh
 fi
 
 program=$(ps -ef | grep gunicorn | grep -v grep)
