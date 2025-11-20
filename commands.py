@@ -5,11 +5,13 @@ from exts import db
 
 def init_roles():
     roles_data = [
-        {"name": "普通用户", "desc": "仅能访问首页", "permissions": Permission.VISITOR},
-        {"name": "网站管理员", "desc": "负责整个网站的管理","permissions": Permission.USER | Permission.BANNER | Permission.TOOL | Permission.LINK | Permission.ANNOUNCE},
-        {"name": "工具管理员", "desc": "负责工具和轮播图的管理","permissions": Permission.BANNER | Permission.TOOL | Permission.LINK},
+        {"name": "超级管理员", "desc": "负责网站的开发", "permissions": Permission.ALL_PERMISSION},
         {"name": "公告管理员", "desc": "负责公告的管理", "permissions": Permission.ANNOUNCE},
-        {"name": "超级管理员", "desc": "负责网站的开发", "permissions": Permission.ALL_PERMISSION}
+        {"name": "工具管理员", "desc": "负责工具和轮播图的管理",
+         "permissions": Permission.BANNER | Permission.TOOL | Permission.LINK},
+        {"name": "网站管理员", "desc": "负责整个网站的管理",
+         "permissions": Permission.USER | Permission.BANNER | Permission.TOOL | Permission.LINK | Permission.ANNOUNCE},
+        {"name": "普通用户", "desc": "仅能访问首页", "permissions": Permission.VISITOR},
     ]
 
     for role_data in roles_data:
@@ -23,6 +25,7 @@ def init_roles():
 
     db.session.commit()
     print("角色初始化完成！")
+
 
 def init_admin_user():
     role = RoleModel.query.filter_by(name="超级管理员").first()
