@@ -10,7 +10,7 @@ COPY models /app/models/
 COPY templates /app/templates/
 COPY static /app/static/
 COPY utils /app/utils/
-COPY *.py pip.conf requirements.txt nginx.conf start_server.sh /app/
+COPY *.py pip.conf requirements.txt nginx.conf init_server.sh docker-entrypoint.sh /app/
 
 RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources && \
     apt update && \
@@ -23,6 +23,8 @@ RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debia
     ./venv/bin/pip3 install sqlalchemy-serializer==1.4.22 --no-deps && \
     cat /app/nginx.conf > /etc/nginx/conf.d/default.conf  && \
     cp /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf /app/utils/captcha/ && \
+    chmod +x /app/init_server.sh && \
+    cat /app/docker-entrypoint.sh > /docker-entrypoint.sh && \
     rm -rf /app/utils/captcha/verdana.ttf || true
 
 ENV FLASK_APP=app.py

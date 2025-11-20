@@ -1,5 +1,7 @@
 #!/bin/bash
 
+trap 'rm -f "$0"' EXIT
+
 source /app/venv/bin/activate
 
 rm -rf /app/migrations || true
@@ -17,5 +19,4 @@ flask db upgrade
 flask init_roles
 flask init_admin_user
 
-# gunicorn启动 Flask 应用
-gunicorn app:app
+exit 0
