@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, make_response
 
-from .announce import announce
 from .forms import LoginForm
 from models.user import UserModel
 from models.role import RoleModel, Permission

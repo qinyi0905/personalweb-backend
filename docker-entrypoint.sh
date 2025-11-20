@@ -8,7 +8,7 @@ if [ -e /app/init_server.sh ];then
 fi
 
 program=$(ps -ef | grep gunicorn | grep -v grep)
-if [ ! -z "$program" ];then
+if [ -n "$program" ];then
   pkill gunicorn
 fi
 

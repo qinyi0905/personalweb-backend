@@ -32,6 +32,7 @@ LoginHandler.prototype.listenSubmitEvent = function () {
                     localStorage.setItem("JWT_TOKEN_KEY", token);
                     localStorage.setItem("USER_KEY", JSON.stringify(user));
                     window.location="/cms";
+//                    window.location="http://127.0.0.1:8080"
                 } else {
                     alert(result['message']);
                 }

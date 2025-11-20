@@ -496,6 +496,8 @@ def add_user():
         #检查用户名是否已经存在
         if UserModel.query.filter_by(username=username).first():
             return restful.params_error(message="用户名已经存在")
+        if UserModel.query.filter_by(username="admin").first():
+            return restful.params_error(message="只能有一个超级管理员用户")
         user = UserModel(username=username, password=password, realname=realname, role=role)
         db.session.add(user)
         db.session.commit()
@@ -504,6 +506,40 @@ def add_user():
         message = form.messages[0]
         return restful.params_error(message=message)
 
+@cmsapi_bp.post("/user/update/password")
+def update_user_password():
+    user_id = request.form.get("id")
+    old_password = request.form.get("old_password")
+    new_password = request.form.get("new_password")
+    repeat_password = request.form.get("repeat_password")
+    if not all([user_id, old_password, new_password]):
+        return restful.params_error(message="参数错误")
+    user = UserModel.query.get(user_id)
+    if not user.check_password(old_password):
+        return restful.params_error(message="密码错误")
+    if new_password != repeat_password:
+        return restful.params_error(message="两次输入的密码不一致")
+    if user:
+        user.password = new_password
+        db.session.commit()
+        return restful.ok()
+    else:
+        return restful.params_error(message="用户不存在")
+
+@cmsapi_bp.post("/user/reset/password")
+def reset_user_password():
+    user_id = request.form.get("id")
+    new_password = request.form.get("new_password")
+    if not user_id:
+        return restful.params_error(message="参数错误")
+    user = UserModel.query.get(user_id)
+    print(new_password)
+    if user:
+        user.password = new_password
+        db.session.commit()
+        return restful.ok()
+    else:
+        return restful.params_error(message="用户不存在")
 
 @cmsapi_bp.post("/user/update/role")
 @permission_required(Permission.USER)
