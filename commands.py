@@ -19,7 +19,7 @@ def init_roles():
             role = RoleModel(**role_data)
             db.session.add(role)
         else:
-            print(f"{role_data["name"]}角色已存在！")
+            print(f"{role_data['name']}角色已存在！")
 
     db.session.commit()
     print("角色初始化完成！")
