@@ -531,18 +531,24 @@ def update_user_password():
 
 @cmsapi_bp.post("/user/reset/password")
 def reset_user_password():
-    user_id = request.form.get("id")
+    username = request.form.get("username")
     new_password = request.form.get("new_password")
-    if not user_id:
+    if not username:
         return restful.params_error(message="参数错误")
-    user = UserModel.query.get(user_id)
-    print(new_password)
+    user = UserModel.query.filter_by(username=username).first()
     if user:
         user.password = new_password
         db.session.commit()
         return restful.ok()
     else:
-        return restful.params_error(message="用户不存在")
+        return restful.params_error(message="用户名不存在")
+
+
+@cmsapi_bp.get("/role/list")
+@permission_required(Permission.USER)
+def role_list():
+    roles = RoleModel.query.order_by(RoleModel.permissions.desc()).all()
+    return restful.ok(data=[role.to_dict() for role in roles])
 
 
 @cmsapi_bp.post("/user/update/role")
